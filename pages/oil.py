@@ -1,11 +1,16 @@
-# streamlit run ./SKN06-1st-5Team/oil/oil.py
+# streamlit run ./SKN06-1st-5Team/pages/oil.py
 import pymysql
 import pandas as pd
 import numpy as np
 import streamlit as st
+import configparser as parser
+
+props = parser.ConfigParser()
+props.read("./config.ini")
+conf = props['MYSQL']
 
 def search(a, b, c): # 조건 데이터 조회
-    with pymysql.connect() as conn:
+    with pymysql.connect(host=conf['host'], port=3306, user=conf['user'], password=conf['password'], db=conf['db']) as conn:
         with conn.cursor() as cur:
             if b == None: # 전국
                 if c == "전체":
@@ -43,8 +48,11 @@ def search(a, b, c): # 조건 데이터 조회
 def plot():
     a, b, c = sidebar()
     df = search(a, b, c)
-    st.dataframe(df)
-    mean(df['고급휘발유'], df['보통휘발유'], df['경유'], df['실내등유'])
+    col1, col2 = st.columns(2)
+    with col1:
+        st.data_editor(df)
+    with col2:
+        mean(df['고급휘발유'], df['보통휘발유'], df['경유'], df['실내등유'])
 
 def mean(pgasoline, gasoline, diesel, kerosene):
     pgasoline = pgasoline.replace(0, np.nan).mean()
@@ -52,7 +60,7 @@ def mean(pgasoline, gasoline, diesel, kerosene):
     diesel = diesel.replace(0, np.nan).mean()
     kerosene = kerosene.replace(0, np.nan).mean()
     ndf = pd.DataFrame({'고급휘발유': [pgasoline], '보통휘발유': [gasoline], '경유': [diesel], '실내등유': [kerosene]})
-    df = st.dataframe(ndf)
+    df = st.data_editor(ndf)
     return df
 
 def sidebar():
@@ -202,7 +210,7 @@ def sidebar():
     if sigungu is None:
         select_gu = None
     else:
-        select_gu = st.sidebar.selectbox("시군구", sigungu)
+        select_gu = st.sidebar.selectbox("시/군/구", sigungu)
     
     iself = st.sidebar.selectbox("셀프", ["전체", "Y", "N"])
     return select_sido, select_gu, iself
