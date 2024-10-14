@@ -14,6 +14,13 @@
 
 3. 전기차 충전소
 데이터 수집: 전기차 충전소 목록, 업체별 유가 매칭 후 급속/완속 가격
+데이터 source: https://ev.or.kr/nportal/main.do (충전 가격)
+            https://tago.kr/charge/address.htm (충전소 목록)
 담당: 안형진, 백하은
 
 4. 스트림릿
+
+5. FAQ
+전기차: (1) https://www.kia.com/kr/vehicles/kia-ev/charging/faq (기아 전기차 FAQ crawling)
+       (2) https://ev.or.kr/nportal/main.do (환경부 전기차 정보 제공 시스템 FAQ crawling)
+
