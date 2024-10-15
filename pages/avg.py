@@ -3,46 +3,50 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 
-# 폰트
-font_path = "C:/Windows/Fonts/malgun.ttf"  # 맑은고딕
-font_prop = fm.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = font_prop.get_name()
-plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
+# font_path = "C:/Windows/Fonts/malgun.ttf"
+# font_prop = fm.FontProperties(fname=font_path)
+# plt.rcParams['font.family'] = font_prop.get_name()
+# plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
 
-# Streamlit 제목
 st.title('지역별 평균 유가 추이 및 증감 분석')
-
-#파일 경로
 file_paths = {
     "경유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(경유).csv",
     "보통 휘발유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(보통).csv",
     "등유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(등유).csv",
     "고급 휘발유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(고급).csv"
 }
-
 # CSV 데이터 로드 함수
 @st.cache_data 
 def load_data(file_path):
     df = pd.read_csv(file_path, encoding='euc-kr')
-    df['연도'] = df['구분'].str[:4]  # '구분' 열에서 연도 추출
-    df['월'] = df['구분'].str[5:7]  # '구분' 열에서 월 추출
+    df['연도'] = df['구분'].str[:4]
+    df['월'] = df['구분'].str[5:7] 
     return df
 
-# 사용자가 연로종류 선택
+# 각 파일을 처리하는 함수
+def process_file(file_path):
+    df = pd.read_csv(file_path, encoding='euc-kr')
+    df['연도'] = df['구분'].str[:4]
+    average_prices = df.groupby('연도').mean(numeric_only=True)
+    return average_prices
+
+# 사용자가 연료 종류 선택
 selected_file = st.selectbox("연료 종류 선택", options=list(file_paths.keys()))
 df = load_data(file_paths[selected_file])
+
+st.sidebar.write(f"{selected_file}의 연도별 평균 가격")
+avg_prices = round(process_file(file_paths[selected_file]),2)
+st.sidebar.dataframe(avg_prices)
 
 # 사용자가 월 선택
 selected_month = st.selectbox('조회할 월 선택', list(range(1, 13)), format_func=lambda x: f"{x}월")
 selected_month_str = f"{selected_month:02d}" 
 df_month = df[df['월'] == selected_month_str]
 
-# 연도별 특정 월평균 가격
-average_prices_month = df_month.groupby('연도').mean(numeric_only=True)
-# 연도별 증감 가격
-average_prices_month_diff = average_prices_month.diff().dropna()  # 전년 대비 증감 계산 (NaN 값 제거)
+# 계산식
+average_prices_month = df_month.groupby('연도').mean(numeric_only=True) # 연도별 특정 월 평균 가격
+average_prices_month_diff = round(average_prices_month.diff().dropna(),2)       # 연도별 증감 가격, 첫 번째 연도 차이는 NaN이므로 제거
 
-#그래프 색상
 colors = {
     '서울': 'blue',
     '부산': 'orange',
@@ -68,29 +72,13 @@ for column in average_prices_month.columns:
     if column in colors:
         plt.plot(average_prices_month.index, average_prices_month[column], marker='o', color=colors[column], label=column)
 
-plt.title(f'{selected_file} 지역별 평균 가격 ({selected_month}월)', fontsize=16)
+plt.title(f'{selected_file} 지역별 평균 가격 ({selected_month}월)', fontsize=19)
 plt.xlabel('연도', fontsize=14)
 plt.ylabel('평균 가격(₩)', fontsize=14)
 plt.legend()
 plt.xticks(rotation=45)
 plt.grid()
-
 st.pyplot(plt)
 
-# 증감 계산 결과를 표로 출력 (Markdown 형식)
-st.subheader(f'{selected_month}월 전년도 대비 증감(₩)')
-
-table_style = """
-<style>
-table {
-    font-size: 12px;
-    width: 80%;
-    margin: 0 auto;
-}
-thead th { background-color: #f0f0f0; }
-tbody td { text-align: center; }
-</style>
-"""
-
-diff_table_md = average_prices_month_diff.style.format("{:.2f}").to_html()
-st.markdown(table_style + diff_table_md, unsafe_allow_html=True)
+st.markdown(f"##### {selected_month}월 전년도 대비 증감(₩)")
+st.dataframe(average_prices_month_diff)
