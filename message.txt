@@ -22,7 +22,7 @@
 
 5. FAQ
 전기차: (1) https://www.kia.com/kr/vehicles/kia-ev/charging/faq (기아 전기차 FAQ crawling)
-       (2) https://ev.or.kr/nportal/main.do (환경부 전기차 정보 제공 시스템 FAQ crawling)
+       (2) https://ev.or.kr/nportal/main.do (환경부 전기차 정보 제공 시스템 FAQ crawling) XXXXXX
         (3) https://www.gscev.com/kr/community/faq/3?searchWord=&searchCate= (GS 칼텍스 전기차 충전 FAQ)
         (3) https://jejuevservice.com/echarger (제주 전기자동차 서비스)
 
