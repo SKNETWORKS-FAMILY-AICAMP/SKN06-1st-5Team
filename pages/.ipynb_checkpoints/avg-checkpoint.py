@@ -43,8 +43,7 @@ selected_month = st.selectbox('조회할 월 선택', list(range(1, 13)), format
 selected_month_str = f"{selected_month:02d}" 
 df_month = df[df['월'] == selected_month_str]
 
-# 계산식
-average_prices_month = df_month.groupby('연도').mean(numeric_only=True) # 연도별 특정 월 평균 가격
+average_prices_month = df_month.groupby('연도').mean(numeric_only=True)         # 연도별 특정 월 평균 가격
 average_prices_month_diff = round(average_prices_month.diff().dropna(),2)       # 연도별 증감 가격, 첫 번째 연도 차이는 NaN이므로 제거
 
 colors = {
@@ -72,7 +71,7 @@ for column in average_prices_month.columns:
     if column in colors:
         plt.plot(average_prices_month.index, average_prices_month[column], marker='o', color=colors[column], label=column)
 
-plt.title(f'{selected_file} 지역별 평균 가격 ({selected_month}월)', fontsize=19)
+plt.title(f'{selected_file} 지역별 평균 가격 ({selected_month}월)', fontsize=18)
 plt.xlabel('연도', fontsize=14)
 plt.ylabel('평균 가격(₩)', fontsize=14)
 plt.legend()
