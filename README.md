@@ -24,10 +24,11 @@
 > 전기차 충전과 관련하여 주요 3개 업체의 FAQ를 크롤링하여 소비자들이 궁금해할 만한 정보를 제공한다.
 
 ## ✔️ Requirements_oil.py
-```python
+```bash
 pip install streamlit-folium PyMySQL
 ```
 ```SQL
+# SQL
 CREATE DATABASE oil;
 ```
 * 카카오 지도 API [생성 방법](https://apis.map.kakao.com/web/guide/)
