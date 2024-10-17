@@ -30,23 +30,26 @@
 
 <img src="https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
 
+
+
 ## 폴더 구조
-```bash 
+```bash
+├── images
+│ ├──().이미지확장자
 ├── pages
 │ ├── oil.py
-│ ├── FAQ.py
-│ └── avg.py
+│ ├── avg.py
+│ ├── 
+│ ├──
+│ └── FAQ.py
 ├── Home.py
-├── csv
-│ ├── oil_data.csv
-│ ├── 주유소_지역별_평균판매가격(경유).csv
-│ ├── 주유소_지역별_평균판매가격(고급).csv
-│ ├── 주유소_지역별_평균판매가격(등유).csv
-│ ├── 주유소_지역별_평균판매가격(보통).csv
-│ ├──
-│ ├──
-│ ├──
-│ └──
+├── oil_data.csv
+├── 주유소_지역별_평균판매가격(경유).csv
+├── 주유소_지역별_평균판매가격(고급).csv
+├── 주유소_지역별_평균판매가격(등유).csv
+├── 주유소_지역별_평균판매가격(보통).csv
+└── EV_merged2.csv
+
 ``` 
 
 ## ✔️ ERD
