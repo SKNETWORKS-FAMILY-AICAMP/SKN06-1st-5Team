@@ -27,6 +27,9 @@
 ```python
 pip install streamlit-folium PyMySQL
 ```
+```SQL
+CREATE DATABASE oil;
+```
 * 카카오 지도 API [생성 방법](https://apis.map.kakao.com/web/guide/)
 * config.ini
 * oil.db(MYSQL) 혹은 oil_data.csv
