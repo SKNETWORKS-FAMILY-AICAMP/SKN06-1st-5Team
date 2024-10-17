@@ -95,11 +95,11 @@ key=
 > 내연기관차 주유와 전기자동차 충전에 대한 종합적인 정보 제공 페이지 구축
 
 3. 결과
-| **주유소 유가 현황** | **유가 추이 및 증감 분석** |
-|:--:|:--:|
-| ![주유소 유가 현황](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/all.png) | ![유가 추이 및 증감 분석](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/avg.png) |
-| **충전소 비용 비교** | **FAQ** | 
-| ![충전소 비용 비교](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/ev_charge.png) | ![FAQ](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/FAQ.png) |
+| 주유소 유가 현황 | 유가 추이 및 증감 분석 |
+|--|--|
+|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/all.png">|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/avg.png">|
+| 충전소 비용 비교 | FAQ | 
+|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/ev_charge.png">|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/FAQ.png">
 
 ## ✔️ 어려웠던 점
 https://ev.or.kr/nportal/evcarInfo/initEvcarChargePrice.do 
