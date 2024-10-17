@@ -79,7 +79,7 @@ key=
 
 ## ✔️ ERD
 <img src="./image/oil_erd.png">
-<img src="./image/EV_ERD.png">
+<img src="./EV_ERD.png">
 
 ## ✔️ 기능 소개
 1. DB 구축
