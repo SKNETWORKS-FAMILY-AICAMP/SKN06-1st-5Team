@@ -101,7 +101,7 @@ key=
 |||
 
 ## ✔️ 어려웠던 점
-https://ev.or.kr/nportal/evcarInfo/initEvcarChargePrice.do \n
+https://ev.or.kr/nportal/evcarInfo/initEvcarChargePrice.do 
 웹 크롤링을 할 때 위의 사이트가 외부에서 데이터를 받아오는 형식이라 GET방식의 request를 사용하지 못해 당황하다가 POST방식으로 연결된 URL에서 데이터를 가져와야 했는데 이를 파악하지 못해 초반 크롤링에 어려움을 겪었습니다. 또한 POST크롤링을 할 때는 요청 파라미터를 찾는게 정말 어려웠던거같다.
 
 
