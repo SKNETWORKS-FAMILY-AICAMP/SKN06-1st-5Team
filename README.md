@@ -23,13 +23,33 @@
 - 자주 묻는 질문(FAQ) 제공
 > 전기차 충전과 관련하여 주요 3개 업체의 FAQ를 크롤링하여 소비자들이 궁금해할 만한 정보를 제공한다.
 
+## ✔️ Requirements_oil.py
+```python
+pip install streamlit-folium PyMySQL
+```
+* 카카오 지도 API [생성 방법](https://apis.map.kakao.com/web/guide/)
+* config.ini
+* oil.db(MYSQL) 혹은 oil_data.csv
+* madecsv.ipynb 실행(3, 4번째 셀은 필요에 따라 진행)
+
+```
+### config.ini
+[MYSQL]
+host=
+user=
+password=
+db=oil
+
+[KAKAO_API]
+key=
+```
+
 ## ✔️ 기술스택
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"><img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white"><img src="https://img.shields.io/badge/selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white">
 
 <img src="https://img.shields.io/badge/streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
-
 
 
 ## 폴더 구조
@@ -48,11 +68,13 @@
 ├── 주유소_지역별_평균판매가격(고급).csv
 ├── 주유소_지역별_평균판매가격(등유).csv
 ├── 주유소_지역별_평균판매가격(보통).csv
-└── EV_merged2.csv
+├── EV_faq3.csv
+└── tago_faq.csv
 
 ``` 
 
 ## ✔️ ERD
+<img src="./image/oil_erd.png">
 
 
 ## ✔️ 기능 소개
@@ -76,6 +98,9 @@
 
 ## ✔️ 프로젝트 회고
 백하은 : 
+
 안형진 :  
+
 전수연 : 시간이 좀 더 있었다면 데이터를 보강하고 싶고, 다른 기능과 결합할 수 있는 방안을 고민해보고 싶은 아쉬움이 있다.
+
 조해원 : 실제로 코드를 짜보면서 어려움을 느꼈지만 끝까지 노력한 팀원들 덕분에 잘 진행될 수 있었다.
