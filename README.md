@@ -97,7 +97,7 @@ key=
 3. 결과
 | 주유소 유가 현황 | 유가 추이 및 증감 분석 |
 |--|--|
-|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/all.png">|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/avg.png">|
+|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/all.png"> | <img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/avg.png"> | 
 | 충전소 비용 비교 | FAQ | 
 |<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/ev_charge.png">|<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/FAQ.png">
 
