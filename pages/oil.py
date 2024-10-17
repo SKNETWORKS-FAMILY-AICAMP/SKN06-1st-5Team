@@ -1,5 +1,5 @@
 # streamlit run ./SKN06-1st-5Team/pages/oil.py
-# streamlit run "oil.py"
+# streamlit run ./pages/oil.py
 import json
 import pymysql
 import requests
@@ -12,7 +12,8 @@ from streamlit_folium import st_folium
 
 st.set_page_config(layout="wide")
 props = parser.ConfigParser()
-props.read("./../config.ini")
+props.read("./config.ini")
+
 conf = props
 
 def search_csv(a, b, c, standard):  # 조건 데이터 조회_csv
