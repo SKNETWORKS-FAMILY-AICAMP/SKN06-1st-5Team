@@ -1,69 +1,141 @@
 # streamlit run ./SKN06-1st-5Team/pages/oil.py
+# streamlit run "oil.py"
+import json
 import pymysql
-import pandas as pd
+import requests
 import numpy as np
+import pandas as pd
 import streamlit as st
 import configparser as parser
+import folium
+from streamlit_folium import st_folium
 
+st.set_page_config(layout="wide")
 props = parser.ConfigParser()
-props.read("./config.ini")
-conf = props['MYSQL']
+props.read("./../config.ini")
+conf = props
 
-def search(a, b, c): # 조건 데이터 조회
-    with pymysql.connect(host=conf['host'], port=3306, user=conf['user'], password=conf['password'], db=conf['db']) as conn:
+def search_csv(a, b, c, standard):  # 조건 데이터 조회_csv
+    df = pd.read_csv("./oil_data.csv", encoding='cp949')
+    if b is None:  # 전국
+        if c != "전체":
+            df = df[df['셀프'] == c]
+    elif b == "전체":  # 도만 선택
+        df = df[df['시도'] == a]
+        if c != "전체":
+            df = df[df['셀프'] == c]
+    else:  # 시도 및 시군구 선택
+        df = df[(df['시도'] == a) & (df['시군구'] == b)]
+        if c != "전체":
+            df = df[df['셀프'] == c]
+
+    df = df.sort_values(by=standard)
+    df.index = pd.RangeIndex(start=1, stop=len(df) + 1, step=1)
+    return df
+
+def search(a, b, c, standard):  # 조건 데이터 조회_mysql
+    with pymysql.connect(host=conf['MYSQL']['host'], port=3306, user=conf['MYSQL']['user'], password=conf['MYSQL']['password'], db=conf['MYSQL']['db']) as conn:
         with conn.cursor() as cur:
-            if b == None: # 전국
+            if b is None:  # 전국
                 if c == "전체":
-                    sql = "SELECT * FROM oil_data"
+                    sql = f"SELECT * FROM oil_data WHERE {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql)
                 else:
-                    sql = "SELECT * FROM oil_data WHERE 셀프 = %s"
+                    sql = f"SELECT * FROM oil_data WHERE 셀프 = %s AND {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql, (c,))
                     
-            elif b == "전체": # 도만 선택
+            elif b == "전체":  # 도만 선택
                 if c == "전체":
-                    sql = "SELECT * FROM oil_data WHERE 시도 = %s"
+                    sql = f"SELECT * FROM oil_data WHERE 시도 = %s AND {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql, (a,))
                 else:
-                    sql = "SELECT * FROM oil_data WHERE 시도 = %s AND 셀프 = %s"
+                    sql = f"SELECT * FROM oil_data WHERE 시도 = %s AND 셀프 = %s AND {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql, (a, c))
-            else: # 시도 선택
+            else:  # 시도 및 시군구 선택
                 if c == "전체":
-                    sql = 'SELECT * FROM oil_data WHERE 시도 = %s AND 시군구 = %s'
+                    sql = f"SELECT * FROM oil_data WHERE 시도 = %s AND 시군구 = %s AND {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql, (a, b))
                 else:
-                    sql = 'SELECT * FROM oil_data WHERE 시도 = %s AND 시군구 = %s AND 셀프 = %s'
+                    sql = f"SELECT * FROM oil_data WHERE 시도 = %s AND 시군구 = %s AND 셀프 = %s AND {standard} IS NOT NULL ORDER BY {standard}"
                     cur.execute(sql, (a, b, c))
             
             cell = cur.fetchall()
     
-    columns = ['시도', '시군구', '이름', '셀프', '고급휘발유', '보통휘발유', '경유', '실내등유']
-    data = []
-    for data_row in cell:
-        data.append(data_row)
-                
+    columns = ['시도', '시군구', '이름', '셀프', '주소', '번호', '고급휘발유', '보통휘발유', '경유', '실내등유']
+    data = list(cell)  # 쿼리 결과로 데이터 배열 생성
     df = pd.DataFrame(data, columns=columns)
+    df.index = pd.RangeIndex(start=1, stop=len(df) + 1, step=1)
     return df
 
-def plot():
-    a, b, c = sidebar()
-    df = search(a, b, c)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.data_editor(df)
-    with col2:
-        mean(df['고급휘발유'], df['보통휘발유'], df['경유'], df['실내등유'])
+def plot():  # 메인 함수
+    a, b, c, btn = sidebar()
+    
+    st.markdown("<style> .large-font { font-size:24px !important; margin-bottom: -90px !important; } </style>", unsafe_allow_html=True)
+    st.markdown('<p class="large-font">정렬 기준</p>', unsafe_allow_html=True)
+    standard = st.radio("", ["이름", "고급휘발유", "보통휘발유", "경유", "실내등유"], horizontal=True)
+    
+    column = ['시도', '시군구', '이름', '셀프', '주소', '고급휘발유', '보통휘발유', '경유', '실내등유']
+    if standard == '이름':
+        column_order = ['시도', '시군구', '이름', '셀프', '고급휘발유', '보통휘발유', '경유', '실내등유', '주소', '번호']
+    else:
+        column_order = ['시도', '시군구', '이름', '셀프']
+        column_order.append(standard)
+        for col in column[5:]:
+            if col != standard and col not in ['주소', '번호']:
+                column_order.append(col)
+        column_order.extend(['주소', '번호'])
+    
+    localdf = search(a, b, c, standard) if btn == "MYSQL" else search_csv(a, b, c, standard)
+    st.markdown(f"<div style='text-align: left; font-size: 24px;'>{a} {b}(셀프: {c}) 평균</div>" if b else f"<div style='text-align: left; font-size: 24px;'>{a}(셀프: {c}) 평균</div>", unsafe_allow_html=True)
+    mean(localdf['고급휘발유'], localdf['보통휘발유'], localdf['경유'], localdf['실내등유'])  # 지역 평균 유가
+    
+    st.markdown(f"<div style='text-align: left; font-size: 24px;'>{a} {b} {c} 조회 결과({standard} 기준)</div>" if b else f"<div style='text-align: left; font-size: 24px;'>{a} {c} 조회 결과({standard} 기준)</div>", unsafe_allow_html=True)
+    event = st.dataframe(localdf, width=1410, hide_index=True, selection_mode="single-row", on_select="rerun", column_order=column_order)
+    select = 0
+    select = event.selection.rows[0] + 1 if event.selection.rows else select
+    
+    if select:
+        col1, col2 = st.columns(2)
+        with col2:
+            st.markdown(f"<div style='text-align: left; font-size: 24px;'>{localdf['이름'][select]}</div>", unsafe_allow_html=True)
+            oilpricedf(localdf['고급휘발유'][select], localdf['보통휘발유'][select], localdf['경유'][select], localdf['실내등유'][select])
 
-def mean(pgasoline, gasoline, diesel, kerosene):
+        with col1:
+            x, y = getxy(localdf['주소'][select])
+            mapplot(localdf['이름'][select], localdf['주소'][select], x, y)
+        
+        
+def oilpricedf(pgasoline, gasoline, diesel, kerosene):
+    df = pd.DataFrame({'고급휘발유': [pgasoline], '보통휘발유': [gasoline], '경유': [diesel], '실내등유': [kerosene]})
+    st.dataframe(df, width=800, hide_index=True)
+
+def mean(pgasoline, gasoline, diesel, kerosene): # 지역 평균 계산 함수
     pgasoline = pgasoline.replace(0, np.nan).mean()
     gasoline = gasoline.replace(0, np.nan).mean()
     diesel = diesel.replace(0, np.nan).mean()
     kerosene = kerosene.replace(0, np.nan).mean()
     ndf = pd.DataFrame({'고급휘발유': [pgasoline], '보통휘발유': [gasoline], '경유': [diesel], '실내등유': [kerosene]})
-    df = st.data_editor(ndf)
+    df = st.data_editor(ndf, width=1410, hide_index=True)
     return df
 
-def sidebar():
+def getxy(addr): # 위도, 경도 구하는 함수 (카카오 api 사용)
+    key = conf['KAKAO_API']['key']
+    url = 'https://dapi.kakao.com/v2/local/search/address.json?query={}'.format(addr)
+    headers = {"Authorization": "KakaoAK " + key}
+    result = json.loads(str(requests.get(url, headers=headers).text))
+    match = result['documents'][0]
+    x = float(match['x'])
+    y = float(match['y'])
+    return x, y
+
+def mapplot(name, addr, x, y): # 지도 띄우는 함수
+    m = folium.Map(location=[y, x], width=800, zoom_start=25) # 서울 위도/경도
+    txt = '<div style="text-align: center;">{}: {}</div>'.format(name, addr)
+    marker = folium.Marker([y, x], popup=folium.Popup(txt, max_width=500),)
+    marker.add_to(m)
+    st_folium(m)
+
+def sidebar(): # 사이드 바 함수
     ganggwon = ['강원 강릉시', '강원 고성군', '강원 동해시', '강원 삼척시', '강원 속초시', 
             '강원 양구군', '강원 양양군', '강원 영월군', '강원 원주시', '강원 인제군', 
             '강원 정선군', '강원 철원군', '강원 춘천시', '강원 태백시', '강원 평창군', 
@@ -112,9 +184,9 @@ def sidebar():
     djeon = ['전체'] + [i.split(" ")[1] for i in daejeon if " " in i]
 
     busan = ['부산 강서구', '부산 금정구', '부산 기장군', '부산 남구', '부산 동구', 
-            '부산 동래구', '부산 부산진구', '부산 북구', '부산 사상구', 
-            '부산 사하구', '부산 서구', '부산 수영구', '부산 연제구', 
-            '부산 영도구', '부산 중구']
+                '부산 동래구', '부산 부산진구', '부산 북구', '부산 사상구', 
+                '부산 사하구', '부산 서구', '부산 수영구', '부산 연제구', 
+                '부산 영도구', '부산 중구', '부산 해운대구']
     bsan = ['전체'] + [i.split(" ")[1] for i in busan if " " in i]
 
     seoul = ['서울 강남구', '서울 강동구', '서울 강북구', '서울 강서구', '서울 관악구', 
@@ -166,7 +238,7 @@ def sidebar():
             '충북 충주시']
     chbug = ['전체'] + [i.split(" ")[1] for i in chungbug if " " in i]
     
-    
+    btn = st.sidebar.radio("데이터베이스", ["CSV", "MYSQL"], horizontal=True)
     sido = ['전국', '강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
     select_sido = st.sidebar.selectbox("시/도", sido)
 
@@ -213,7 +285,7 @@ def sidebar():
         select_gu = st.sidebar.selectbox("시/군/구", sigungu)
     
     iself = st.sidebar.selectbox("셀프", ["전체", "Y", "N"])
-    return select_sido, select_gu, iself
+    return select_sido, select_gu, iself, btn
 
 
 if __name__ == "__main__":
