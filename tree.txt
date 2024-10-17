@@ -1,0 +1,69 @@
+폴더 PATH의 목록입니다.
+볼륨 일련 번호는 382E-C517입니다.
+C:.
+|   config.ini
+|   crawling.py
+|   darklord.png
+|   ERD_EV.mwb
+|   ERD_EV_2.mwb
+|   EV_charge.py
+|   EV_charger.ipynb
+|   EV_faq.csv
+|   EV_faq2.csv
+|   EV_faq3.csv
+|   EV_merged.csv
+|   EV_merged2.csv
+|   EV_merged3.csv
+|   FAQ crawling.ipynb
+|   faq.csv
+|   FAQ.py
+|   graph1.png
+|   graph2.png
+|   graph3.png
+|   Home.py
+|   madecsv.ipynb
+|   mainpage.py
+|   message.txt
+|   oil_data.csv
+|   oil_price.py
+|   README.md
+|   tago_a.csv
+|   tago_faq.csv
+|   tago_q.csv
+|   tree.txt
+|   Untitled.ipynb
+|   기관별_전기차충전가격.csv
+|   기관별_전기차충전가격.ipynb
+|   주유소_지역별_평균판매가격(경유).csv
+|   주유소_지역별_평균판매가격(고급).csv
+|   주유소_지역별_평균판매가격(등유).csv
+|   주유소_지역별_평균판매가격(보통).csv
+|   지역별 유가 평균(경유).ipynb
+|   지역별 평균가격.py
+|   지역별평균가격.py
+|   충전소 리스트-20241011181902.xls
+|   충전소 리스트.csv
+|   
++---chromedriver-win64
+|       chromedriver.exe
+|       LICENSE.chromedriver
+|       THIRD_PARTY_NOTICES.chromedriver
+|       
++---image
+|       1.png
+|       2.png
+|       3.png
+|       EV_ERD.png
+|       flowchart.png
+|       oil_erd.png
+|       price.png
+|       
+\---pages
+    |   avg.py
+    |   EV_charge.py
+    |   FAQ.py
+    |   oil.py
+    |   
+    \---.ipynb_checkpoints
+            avg-checkpoint.py
+            
