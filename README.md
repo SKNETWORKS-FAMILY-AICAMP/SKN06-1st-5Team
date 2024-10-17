@@ -80,6 +80,8 @@ key=
 ## ✔️ ERD
 <img src="./image/oil_erd.png">
 <img src="./EV_ERD.png">
+<img src="https://github.com/user-attachments/assets/3bb2e336-050c-4cd9-8750-09f4b6a99910">
+
 
 ## ✔️ 기능 소개
 1. DB 구축
