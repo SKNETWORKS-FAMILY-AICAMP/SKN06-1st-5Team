@@ -80,7 +80,7 @@ key=
 ## ✔️ ERD
 <img src="./image/oil_erd.png">
 <img src="./EV_ERD.png">
-<img src="./price.png">
+<img src="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/price.png">
 
 
 ## ✔️ 기능 소개
