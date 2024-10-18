@@ -10,10 +10,10 @@ plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
 
 st.title('지역별 평균 유가 추이 및 증감 분석')
 file_paths = {
-    "경유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(경유).csv",
-    "보통 휘발유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(보통).csv",
-    "등유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(등유).csv",
-    "고급 휘발유": "C:/Users/Playdata/Desktop/class/SKN06-1st-5Team/주유소_지역별_평균판매가격(고급).csv"
+    "경유": "주유소_지역별_평균판매가격(경유).csv",
+    "보통 휘발유": "주유소_지역별_평균판매가격(보통).csv",
+    "등유": "주유소_지역별_평균판매가격(등유).csv",
+    "고급 휘발유": "주유소_지역별_평균판매가격(고급).csv"
 }
 # CSV 데이터 로드 함수
 @st.cache_data 
