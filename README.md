@@ -2,7 +2,7 @@
 ## ✔️ 팀원 소개
 | 백하은 | 안형진 | 전수연 | 조해원 | 
 |--|--|--|--|
-| 백조교 | 코딩하는 돌아이 | 원투쑤리 | 해드워드조 |
+| 백조교 | 그냥 돌아이 | 원투쑤리 | 해드워드조 |
 |![CC](https://github.com/user-attachments/assets/f3ccd5d7-c31a-4cf2-977c-5bb8891934c7)|![돌아이1](https://github.com/user-attachments/assets/ce9aa002-ee3b-474e-89c0-9ddb3ae62a86)|![DDD](https://github.com/user-attachments/assets/ea8c3b35-22af-4a66-accd-84cbc1206aaf)|![DD](https://github.com/user-attachments/assets/3f46ee40-eb60-4936-87b0-bf8e4d86db34)|
 
 # 전국 주유소 유가 및 전기차 충전소 가격 조회 시스템
