@@ -101,7 +101,12 @@ key=
 ![충전소 비용 비교](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/ev_charge.png) 
 - FAQ
 ![FAQ](https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN06-1st-5Team/blob/main/image/FAQ.png)
-
+## ✔️ 분석
+- 지역별 평균 유가 추이 분석 결과 2022년 전반기에 크게 증가.
+- 원인: 코로나 엔데믹에 접어들며 경제회복에 따른 빠른 석유 수요 증가, 그리고 원유 생산 속도가 수요 회복 속도에 미치치 못함.
+- 지역별 전기차 충전소 개수 분석 결과 제주에 많이 분포된 것으로 파악 .
+- 원인: 제주는 온실가스 배출 없는 깨끗한 제주를 만들기 위한 '탄소 없는 섬' 정책을 추진하며 2013년부터 공격적으로 전기차를 보급함.
+ 
 
 ## ✔️ 어려웠던 점
 https://ev.or.kr/nportal/evcarInfo/initEvcarChargePrice.do 
